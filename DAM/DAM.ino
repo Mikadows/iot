@@ -8,7 +8,7 @@
  */
 #define RED_LED_PIN 18
 #define GREEN_LED_PIN 19
-#define POTAR_PIN 15
+#define POTAR_PIN 33
 #define GATE_PIN 21
 #define GATE_STEP_DELAY 10
 Servo myservo;
@@ -111,8 +111,8 @@ void setup() {
   closeGate();
   
   // Network & MQTT Setup
-  //setup_wifi();
-  //setup_mqtt();
+  setup_wifi();
+  setup_mqtt();
 }
 
 // the loop routine runs over and over again forever:
@@ -130,9 +130,9 @@ void loop() {
 
   manageRoad(analogValue);
   
-  delay(100);
+  delay(1000);
 
-/*
+
   reconnect();
   client.loop(); 
   //On utilise pas un delay pour ne pas bloquer la réception de messages 
@@ -140,7 +140,7 @@ void loop() {
      tps=millis();
      float temp = random(30);
    }
-   */
+   
 
   Serial.println("---------------------------");
 
@@ -153,7 +153,7 @@ void loop() {
 void manageRoad(int value) {
   if (value <= 800) {
     // Send mqtt message : to open gate
-    Serial.println("Send mqtt message : to open gate");
+    Serial.   println("Send mqtt message : to open gate");
     openGate();
   } 
 
