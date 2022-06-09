@@ -28,14 +28,14 @@ void loop() {
   Serial.print(", Voltage: ");
   Serial.println(voltage);
 
-  isRoadClosed(analogValue);
+  manageRoad(analogValue);
   
   delay(1000);
 
   Serial.println("---------------------------");
 }
 
-void isRoadClosed(int value) {
+void manageRoad(int value) {
   if (value <= 800) {
     // Send mqtt message : to open gate
     Serial.println("Send mqtt message : to open gate");
