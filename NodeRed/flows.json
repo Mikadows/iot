@@ -1,5 +1,359 @@
 [
     {
+        "id": "32e3036d36c7553c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "efd52827c82fd1ab",
+        "type": "mqtt in",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "topic": "dam/presence",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "5210f25a36c50a3f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 500,
+        "wires": [
+            [
+                "e5d56978a4af8242"
+            ]
+        ]
+    },
+    {
+        "id": "8ba2463a5a12b0f0",
+        "type": "ui_gauge",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "group": "d2875480c044ae65",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Water level",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "4096",
+        "max": "0",
+        "colors": [
+            "#cae8f1",
+            "#81c3d9",
+            "#3a71cb"
+        ],
+        "seg1": "1200",
+        "seg2": "800",
+        "className": "",
+        "x": 910,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c5346d339940bb26",
+        "type": "ui_button",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "group": "4e6dab739356f2d1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Open gate",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "open",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 600,
+        "wires": [
+            [
+                "cc443cdf4c57d653"
+            ]
+        ]
+    },
+    {
+        "id": "49c36e532e5cdfe0",
+        "type": "ui_text",
+        "z": "32e3036d36c7553c",
+        "group": "a3e99642c146580f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Dam presence",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 920,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "cc443cdf4c57d653",
+        "type": "mqtt out",
+        "z": "32e3036d36c7553c",
+        "name": "open gate",
+        "topic": "iot-projo-gate",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5210f25a36c50a3f",
+        "x": 440,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "8fdfb6b9541738d9",
+        "type": "ui_button",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "group": "4e6dab739356f2d1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Close gate",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "close",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 660,
+        "wires": [
+            [
+                "b8352addaf8b2746"
+            ]
+        ]
+    },
+    {
+        "id": "b8352addaf8b2746",
+        "type": "mqtt out",
+        "z": "32e3036d36c7553c",
+        "name": "close gate",
+        "topic": "iot-projo-gate",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5210f25a36c50a3f",
+        "x": 450,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "ac6e30ecf4ed9382",
+        "type": "change",
+        "z": "32e3036d36c7553c",
+        "name": "str to number",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "",
+                "fromt": "str",
+                "to": "",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "be1001c7e41d8611"
+            ]
+        ]
+    },
+    {
+        "id": "de9c84ef69e8e807",
+        "type": "mqtt in",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "topic": "iot-projo-water-level",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "5210f25a36c50a3f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "ac6e30ecf4ed9382"
+            ]
+        ]
+    },
+    {
+        "id": "be1001c7e41d8611",
+        "type": "function",
+        "z": "32e3036d36c7553c",
+        "name": "divide by 10000",
+        "func": "msg.payload /= 10000\nmsg.payload = Math.round(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 440,
+        "wires": [
+            [
+                "8ba2463a5a12b0f0",
+                "fb4b9be155dc8332"
+            ]
+        ]
+    },
+    {
+        "id": "fb4b9be155dc8332",
+        "type": "ui_chart",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "group": "d2875480c044ae65",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Water level history",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#2589d0",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 930,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "990de08e8b12c847",
+        "type": "ui_gauge",
+        "z": "32e3036d36c7553c",
+        "name": "",
+        "group": "4e6dab739356f2d1",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gate Angle",
+        "label": "degrées",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "90",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "60",
+        "className": "",
+        "x": 1010,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5943df591ce5c6ba",
+        "type": "function",
+        "z": "32e3036d36c7553c",
+        "name": "divide by 10000 & round",
+        "func": "msg.payload /= 100\n//msg.payloag = Math.round(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 240,
+        "wires": [
+            [
+                "990de08e8b12c847"
+            ]
+        ]
+    },
+    {
+        "id": "41c83053e957a13a",
+        "type": "change",
+        "z": "32e3036d36c7553c",
+        "name": "str to number",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "",
+                "fromt": "str",
+                "to": "",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 240,
+        "wires": [
+            [
+                "5943df591ce5c6ba"
+            ]
+        ]
+    },
+    {
         "id": "fc760e3e5436c941",
         "type": "mqtt in",
         "z": "32e3036d36c7553c",
@@ -19,6 +373,35 @@
                 "41c83053e957a13a"
             ]
         ]
+    },
+    {
+        "id": "e5d56978a4af8242",
+        "type": "function",
+        "z": "32e3036d36c7553c",
+        "name": "get message",
+        "func": "msg.payload = msg.payload == 0 \n    ? 'Déguinde, sous le barrage mon pote' \n    : 'Achtung, da ist ein Typ unter der Brücke';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 500,
+        "wires": [
+            [
+                "49c36e532e5cdfe0"
+            ]
+        ]
+    },
+    {
+        "id": "7b653483f0558f61",
+        "type": "ui_spacer",
+        "z": "32e3036d36c7553c",
+        "name": "spacer",
+        "group": "4e6dab739356f2d1",
+        "order": 3,
+        "width": 10,
+        "height": 1
     },
     {
         "id": "5210f25a36c50a3f",
@@ -45,5 +428,46 @@
         "willPayload": "",
         "willMsg": {},
         "sessionExpiry": ""
+    },
+    {
+        "id": "d2875480c044ae65",
+        "type": "ui_group",
+        "name": "Dam Water Level",
+        "tab": "b1ed506e0431341f",
+        "order": 3,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4e6dab739356f2d1",
+        "type": "ui_group",
+        "name": "Dam Gate",
+        "tab": "b1ed506e0431341f",
+        "order": 2,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a3e99642c146580f",
+        "type": "ui_group",
+        "name": "Présence Aval",
+        "tab": "b1ed506e0431341f",
+        "order": 1,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b1ed506e0431341f",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]
