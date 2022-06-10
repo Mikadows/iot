@@ -116,12 +116,12 @@ void loop() {
       digitalWrite(LED, stateLed);
     }
     blinkLed();
-    Serial.print("Publish message: ");
-    Serial.println(stateLed);
-    char msg_out[20];
-    sprintf(msg_out, "%d", stateLed);
-    publish(msg_out);
   }
+  Serial.print("Publish message: ");
+  Serial.println(stateLed);
+  char msg_out[20];
+  sprintf(msg_out, "%d", stateLed);
+  publish(msg_out);
   blinkLed();
   blinkBuzzerError();
   lastState = currentState;
