@@ -17,7 +17,8 @@ int gatePosition = 0;
 /**
  * MQTT & NETWORT Definitions
  */
-#define MQTT_TOPIC "esgi-eltopico-delarduino-AMG"
+#define MQTT_TOPIC_SUB "iot-projo-gate"
+#define MQTT_TOPIC_PUB "iot-projo-water-level"
 #define MQTT_SERVER "test.mosquitto.org" //Adresse IP du Broker Mqtt
 long tps=0;
 const char* ssid = "ESGI";
@@ -59,24 +60,19 @@ void callback(char* topic, byte *payload, unsigned int length) {
   Serial.println();
 
   // Recieve message to close or open the gate
-
-   
-  /*
-   if ((char)payload[0] == '1') {
-     Serial.println("LED ON");
-     digitalWrite(ledPin,HIGH); 
-   } else {
-     Serial.println("LED OFF");
-     digitalWrite(ledPin,LOW); 
+  
+  
+   if ((char) payload[0] == 'o') {
+     openGate();
+   } else if ((char) payload[0] == 'c') {
+     closeGate();
    }
-   */
-   
  }
 
 void reconnect(){
   while (!client.connected()) {
     if (client.connect("ESP32Client")) {
-      client.subscribe(MQTT_TOPIC);
+      client.subscribe(MQTT_TOPIC_SUB);
     }
     else {
       Serial.print("echec, code erreur= ");
@@ -85,7 +81,7 @@ void reconnect(){
       delay(2000);
     }
   }
-  client.subscribe(MQTT_TOPIC);//souscription au topic led pour commander une led
+  client.subscribe(MQTT_TOPIC_SUB);//souscription au topic led pour commander une led
 }
 
 /*************************************************/
@@ -129,8 +125,9 @@ void loop() {
   Serial.println(voltage);
 
   manageRoad(analogValue);
+  publishWaterLevel(analogValue);
   
-  delay(1000);
+  delay(100);
 
 
   reconnect();
@@ -154,7 +151,7 @@ void manageRoad(int value) {
   if (value <= 800) {
     // Send mqtt message : to open gate
     Serial.   println("Send mqtt message : to open gate");
-    openGate();
+    // openGate();    
   } 
 
   if (value <= 1000) {
@@ -172,7 +169,7 @@ void manageRoad(int value) {
     digitalWrite(RED_LED_PIN, LOW);
     digitalWrite(GREEN_LED_PIN, HIGH);
     Serial.println("ROAD OPEN => Local LED OFF");
-    closeGate();
+//    closeGate();
   }
 }
 
@@ -204,4 +201,15 @@ void closeGate() {
       delay(GATE_STEP_DELAY);
     }
   }
+}
+
+/**
+ * Publish water level
+ */
+void publishWaterLevel(int value) {
+    reconnect();
+    Serial.print("Publish message: ");
+    char msg_out[20];
+    sprintf(msg_out, "%d", value);
+    client.publish(MQTT_TOPIC_PUB, msg_out);
 }
